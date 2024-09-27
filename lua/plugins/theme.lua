@@ -3,7 +3,7 @@ local function setup_nightfox()
     -- Setup options for nightfox if supported
     require('nightfox').setup({
         options = {
-            transparent = false,  -- Set to true if you want a transparent background
+            transparent = true,  -- Set to true if you want a transparent background
             terminal_colors = true,
             styles = {
                 comments = "italic",              -- Italic comments for readability

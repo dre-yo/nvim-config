@@ -2,6 +2,8 @@
 local function setup_telescope()
     local telescope = require('telescope')
 
+
+
     -- Setup telescope with any configuration options you may need
     telescope.setup {}
 
@@ -14,6 +16,7 @@ local function setup_telescope()
     vim.keymap.set('n', '<leader>fs', function()
         builtin.grep_string({ search = vim.fn.input("Grep > ") })  -- Fixed closing parentheses
     end)
+   
 end
 
 return {
