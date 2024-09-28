@@ -2,7 +2,6 @@
 -- Set options
 
 vim.opt.guicursor = ""
-
 vim.opt.nu = true
 vim.opt.relativenumber = true
 -- Set tab width to 2 spaces
