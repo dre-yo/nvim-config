@@ -34,4 +34,4 @@ vim.opt.updatetime = 50
 
 vim.opt.colorcolumn = "80"
 
-vim.g.codeium_enabled = false;
+vim.g.codeium_enabled = true;
