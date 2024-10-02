@@ -10,7 +10,7 @@ return {
         "hrsh7th/nvim-cmp",
         "L3MON4D3/LuaSnip",
         "saadparwaiz1/cmp_luasnip",
-        "j-hui/fidget.nvim",
+        "j-hui/fidget.nvim", -- Optional, helps display LSP progress
     },
 
     config = function()
@@ -26,32 +26,19 @@ return {
         require("mason").setup()
         require("mason-lspconfig").setup({
             ensure_installed = {
-                "lua_ls",
-                "rust_analyzer",
+                "lua_ls",       -- Lua LSP
+                "clangd",       -- C, C++, C LSP
+                "jdtls",        -- Java LSP
+                -- Add tsserver if you work with JavaScript/TypeScript:
+                --"tsserver",
             },
             handlers = {
-                function(server_name) -- default handler (optional)
+                function(server_name)
                     require("lspconfig")[server_name].setup {
                         capabilities = capabilities
                     }
                 end,
-
-                zls = function()
-                    local lspconfig = require("lspconfig")
-                    lspconfig.zls.setup({
-                        root_dir = lspconfig.util.root_pattern(".git", "build.zig", "zls.json"),
-                        settings = {
-                            zls = {
-                                enable_inlay_hints = true,
-                                enable_snippets = true,
-                                warn_style = true,
-                            },
-                        },
-                    })
-                    vim.g.zig_fmt_parse_errors = 0
-                    vim.g.zig_fmt_autosave = 0
-
-                end,
+                -- Lua specific settings
                 ["lua_ls"] = function()
                     local lspconfig = require("lspconfig")
                     lspconfig.lua_ls.setup {
@@ -60,7 +47,7 @@ return {
                             Lua = {
                                 runtime = { version = "Lua 5.1" },
                                 diagnostics = {
-                                    globals = { "bit", "vim", "it", "describe", "before_each", "after_each" },
+                                    globals = { "vim" }, -- Add globals like 'vim'
                                 }
                             }
                         }
@@ -69,14 +56,22 @@ return {
             }
         })
 
-        -- Trigger google-java-format before saving Java files
+        -- Autoformat C/C++ files with clang-format on save
         vim.api.nvim_create_autocmd("BufWritePre", {
-            pattern = "*.java",
+            pattern = { "*.c", "*.cpp", "*.h", "*.hpp", "*.cc", ".hh" },
             callback = function()
-                -- Run google-java-format on the buffer before saving
-                vim.cmd("%!google-java-format -")
+                vim.cmd("%!clang-format")
             end,
         })
+        vim.api.nvim_create_autocmd("BufWritePre", {
+          pattern = "*.java",
+          callback = function()
+            vim.cmd("%!google-java-format -")
+          end,
+        })
+
+        -- Manual command for clang-format
+        vim.api.nvim_set_keymap('n', '<leader>cf', '<cmd>%!clang-format<CR>', { noremap = true, silent = true })
 
         local cmp_select = { behavior = cmp.SelectBehavior.Select }
 
@@ -101,7 +96,6 @@ return {
         })
 
         vim.diagnostic.config({
-            -- update_in_insert = true,
             float = {
                 focusable = false,
                 style = "minimal",
@@ -113,4 +107,3 @@ return {
         })
     end
 }
-
