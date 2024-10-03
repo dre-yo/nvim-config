@@ -23,7 +23,7 @@ local function setup_nightfox()
   })
 
   -- Apply the chosen color scheme directly
-  vim.cmd('colorscheme nordfox')  -- You can change 'carbonfox' to 'nightfox', 'dayfox', etc.
+  vim.cmd('colorscheme carbonfox')  -- You can change 'carbonfox' to 'nightfox', 'dayfox', etc.
 end
 
 return {
