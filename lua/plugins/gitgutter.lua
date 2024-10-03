@@ -16,6 +16,7 @@ local function setup_gitsigns()
       changedelete = { text = '~' },
       untracked    = { text = '┆' },
     },
+    signs_staged_enable = true,
     signcolumn = true,
     current_line_blame = true,
     current_line_blame_opts = {
