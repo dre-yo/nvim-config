@@ -70,6 +70,14 @@ return {
           end,
         })
 
+                -- Autoformat Python files with autopep8 installed via Mason on save
+        vim.api.nvim_create_autocmd("BufWritePre", {
+            pattern = "*.py",
+            callback = function()
+                vim.cmd("%!~/.local/share/nvim/mason/bin/autopep8 -")
+            end,
+        })
+
         -- Manual command for clang-format
         vim.api.nvim_set_keymap('n', '<leader>cf', '<cmd>%!clang-format<CR>', { noremap = true, silent = true })
 
