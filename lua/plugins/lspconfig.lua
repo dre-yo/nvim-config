@@ -28,7 +28,6 @@ return {
             ensure_installed = {
                 "lua_ls",       -- Lua LSP
                 "clangd",       -- C, C++, C LSP
-                "jdtls",        -- Java LSP
                 -- Add tsserver if you work with JavaScript/TypeScript:
                 --"tsserver",
             },
